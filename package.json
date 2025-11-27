@@ -8,7 +8,8 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "localstack:start": "LOCALSTACK_SERVICES=dynamodb,lambda,apigateway,sqs,s3,iam,cloudformation,logs localstack start -d"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
