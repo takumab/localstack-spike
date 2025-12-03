@@ -1,0 +1,17 @@
+###
+POST  https://kqnuzvxocw.execute-api.localhost.localstack.cloud:4566/prod/payment
+Content-Type: application/json
+
+{
+  "amount": "200",
+  "status": "completed"
+}
+
+###
+GET  https://kqnuzvxocw.execute-api.localhost.localstack.cloud:4566/prod/payment?id=2&status=completed
+Content-Type: application/json
+
+###
+GET http://localhost:3000/notifications
+Content-Type: application/json
+
