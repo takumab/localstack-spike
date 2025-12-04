@@ -7,7 +7,7 @@ I've elected to start with a simple boilerplate stack, which enables you get sta
 
 ## LocalStack Documentation
 - More info about [LocalStack](https://docs.localstack.cloud/)
-- LocalStack pricing here: [Licensing & Tiers](https://docs.localstack.cloud/aws/licensing/)
+- LocalStack free, base, and ultimate services here: [Licensing & Tiers](https://docs.localstack.cloud/aws/licensing/)
 
 ## Prerequisites
 - LocalStack installed and running. You can follow the instructions [here](https://github.com/localstack/localstack).
