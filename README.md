@@ -5,6 +5,10 @@ This spike is to help us understand if Localstack would be a good addition to ou
 our stack or project without having to deploy to AWS and testing there. 
 I've elected to start with a simple boilerplate stack, which enables you get started as quickly as possible. 
 
+## LocalStack Documentation
+- More info about [LocalStack](https://docs.localstack.cloud/)
+- LocalStack pricing here: [Licensing & Tiers](https://docs.localstack.cloud/aws/licensing/)
+
 ## Prerequisites
 - LocalStack installed and running. You can follow the instructions [here](https://github.com/localstack/localstack).
   - TLDR: You can install via homebrew: `brew install localstack/tap/localstack-cli`
@@ -38,6 +42,11 @@ Once you have LocalStack and Cdklocal installed, you can proceed with the follow
 ***NOTE***: ***(Optional)*** Query deployed table to verify DynamoDB table exists. This is a temporary command just to verify the table was created successfully.:
 ```bash
     npm run query:table
+```
+
+***NOTE***: ***(Optional)*** Scan deployed table to verify DynamoDB table exists. This is a temporary command just to verify items were saved successfully.:
+```bash
+    npm run scan:table
 ```
 
 ### Testing the API Gateway Endpoint
