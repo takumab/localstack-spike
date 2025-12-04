@@ -1,10 +1,11 @@
-import {AttributeType, Table, TableV2} from "aws-cdk-lib/aws-dynamodb";
 import {CfnOutput, RemovalPolicy, Stack, StackProps} from "aws-cdk-lib";
 import {Construct} from "constructs";
-import {Code, Runtime} from "aws-cdk-lib/aws-lambda";
+import {Runtime} from "aws-cdk-lib/aws-lambda";
 import * as path from "node:path";
 import {LambdaIntegration, LambdaRestApi} from "aws-cdk-lib/aws-apigateway";
 import {NodejsFunction} from "aws-cdk-lib/aws-lambda-nodejs";
+import {AttributeType, TableV2} from "aws-cdk-lib/aws-dynamodb";
+
 
 export class LocalstackSpikeStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {

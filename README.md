@@ -27,9 +27,25 @@ Once you have LocalStack and Cdklocal installed, you can proceed with the follow
    ```
 7. Bootstrap the CDK stack in LocalStack using Cdklocal:
    ```bash
-   cdklocal bootstrap
+   npm run local:bootstrap
    ```
 8. In a new terminal window, deploy the CDK stack to LocalStack using Cdklocal:
    ```bash
-   cdklocal deploy
+   npm run local:deploy
    ```
+9. After deployment, you should see the API Gateway endpoint URL in the output.
+
+***NOTE***: ***(Optional)*** Query deployed table to verify DynamoDB table exists. This is a temporary command just to verify the table was created successfully.:
+```bash
+    npm run query:table
+```
+
+### Testing the API Gateway Endpoint
+I've placed an *.http file in the root of the project, 
+which you can use with the REST Client extension for VS Code/Jetbrains to test the API Gateway endpoint created by the stack.
+If your editor does not support *.http files, you can use curl or Postman to test the endpoint.
+
+```bash
+curl -X GET --location "<YOUR_EXECUTE_API_URL_HERE>.localhost.localstack.cloud:4566/prod/payment?id=2&status=completed" \
+-H "Content-Type: application/json"
+```
