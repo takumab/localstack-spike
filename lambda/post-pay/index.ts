@@ -21,11 +21,12 @@ export const handler = async (
 
 	try {
 		if (event.body !== null) {
+			const id = String(Math.floor(Math.random() * 100));
 			await docClient.send(
 				new PutCommand({
 					TableName: tableName,
 					Item: {
-						id: String(Math.floor(Math.random() * 100)),
+						id: id,
 						amount: body.amount,
 						status: body.status,
 					},
@@ -34,7 +35,7 @@ export const handler = async (
 			return {
 				statusCode: 200,
 				body: JSON.stringify({
-					message: `Post-pay Lambda executed successfully with event: ${event.body}`,
+					message: `Post-pay Lambda executed successfully with event: ${event.body}, paymentId: ${id}`,
 				}),
 			};
 		}
@@ -58,6 +59,7 @@ export const handler = async (
 				message: `Post-pay Lambda executed successfully with event: ${event.body}`,
 				tableName: tableName,
 				itemCount: result.Count || 0,
+				items: result.Items || [],
 			}),
 		};
 	} catch (error) {

@@ -1,14 +1,14 @@
 ###
-POST  https://kqnuzvxocw.execute-api.localhost.localstack.cloud:4566/prod/payment
+POST https://rgdceehryi.execute-api.localhost.localstack.cloud:4566/prod/payment
 Content-Type: application/json
 
 {
-  "amount": "200",
+  "amount": "400",
   "status": "completed"
 }
 
 ###
-GET  https://kqnuzvxocw.execute-api.localhost.localstack.cloud:4566/prod/payment?id=2&status=completed
+GET  https://rgdceehryi.execute-api.localhost.localstack.cloud:4566/prod/payment?id=19&status=completed
 Content-Type: application/json
 
 ###
