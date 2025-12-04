@@ -18,8 +18,8 @@ export class LocalstackSpikeStack extends Stack {
 		});
 
 		// Lambda Functions
-		const takeMoneyLambda = new NodejsFunction(this, "PostPayLambda", {
-			functionName: "post-pay",
+		const takeMoneyLambda = new NodejsFunction(this, "TakeMoneyLambda", {
+			functionName: "take-money",
 			runtime: Runtime.NODEJS_18_X,
 			entry: path.join(__dirname, "../lambda/post-pay/index.ts"),
 			handler: "handler",

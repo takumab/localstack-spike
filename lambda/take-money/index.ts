@@ -12,7 +12,7 @@ const docClient = DynamoDBDocumentClient.from(client);
 export const handler = async (
 	event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
-	console.log("Post-pay Lambda triggered");
+	console.log("Take-money Lambda triggered");
 	console.log("Event:", JSON.stringify(event, null, 2));
 	const tableName = process.env.PAYMENT_PROJECTIONS_TABLE;
 	const paymentId = event.queryStringParameters?.id;
@@ -35,7 +35,7 @@ export const handler = async (
 			return {
 				statusCode: 200,
 				body: JSON.stringify({
-					message: `Post-pay Lambda executed successfully with event: ${event.body}, paymentId: ${id}`,
+					message: `Take-money Lambda executed successfully with event: ${event.body}, paymentId: ${id}`,
 				}),
 			};
 		}
@@ -56,7 +56,7 @@ export const handler = async (
 		return {
 			statusCode: 200,
 			body: JSON.stringify({
-				message: `Post-pay Lambda executed successfully with event: ${event.body}`,
+				message: `Take-money Lambda executed successfully with event: ${event.body}`,
 				tableName: tableName,
 				itemCount: result.Count || 0,
 				items: result.Items || [],
