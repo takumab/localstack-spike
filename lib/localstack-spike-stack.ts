@@ -11,42 +11,42 @@ export class LocalstackSpikeStack extends Stack {
 		super(scope, id, props);
 
 		// DynamoDB Tables
-		const paymentProjectionsTable = new TableV2(this, "PaymentProjections", {
-			tableName: "payment-projections",
+		const eventsTable = new TableV2(this, "PaymentProjections", {
+			tableName: "events-table",
 			partitionKey: { name: "id", type: AttributeType.STRING },
 			removalPolicy: RemovalPolicy.DESTROY,
 		});
 
 		// Lambda Functions
-		const postPayLambda = new NodejsFunction(this, "PostPayLambda", {
+		const takeMoneyLambda = new NodejsFunction(this, "PostPayLambda", {
 			functionName: "post-pay",
 			runtime: Runtime.NODEJS_18_X,
 			entry: path.join(__dirname, "../lambda/post-pay/index.ts"),
 			handler: "handler",
 			environment: {
-				PAYMENT_PROJECTIONS_TABLE: paymentProjectionsTable.tableName,
+				PAYMENT_PROJECTIONS_TABLE: eventsTable.tableName,
 			},
 		});
 
 		// Grant post-pay Lambda read access to payment-projections table
-		paymentProjectionsTable.grantReadData(postPayLambda);
+		eventsTable.grantReadData(takeMoneyLambda);
 
 		// API Gateway
-		const api = new LambdaRestApi(this, "PostPayApi", {
+		const api = new LambdaRestApi(this, "TakeMoneyApi", {
 			integrationOptions: {},
 			proxy: false,
-			handler: postPayLambda,
-			restApiName: "post-pay-api",
-			description: "API Gateway for post-pay service",
+			handler: takeMoneyLambda,
+			restApiName: "take-money-api",
+			description: "API Gateway for taking money",
 		});
 
 		// Connect API Gateway to post-pay Lambda
-		const postPayIntegration = new LambdaIntegration(postPayLambda);
+		const takeMoneyIntegration = new LambdaIntegration(takeMoneyLambda);
 
 		// Add a /payment resource
 		const paymentResource = api.root.addResource("payment");
-		paymentResource.addMethod("GET", postPayIntegration);
-		paymentResource.addMethod("POST", postPayIntegration);
+		paymentResource.addMethod("GET", takeMoneyIntegration);
+		paymentResource.addMethod("POST", takeMoneyIntegration);
 
 		// Outputs
 		new CfnOutput(this, "ApiUrl", {
@@ -54,8 +54,8 @@ export class LocalstackSpikeStack extends Stack {
 			description: "API Gateway URL",
 		});
 
-		new CfnOutput(this, "PaymentProjectionsTableName", {
-			value: paymentProjectionsTable.tableName,
+		new CfnOutput(this, "EventsTableName", {
+			value: eventsTable.tableName,
 		});
 	}
 }
