@@ -11,7 +11,3 @@ Content-Type: application/json
 GET  https://krurezpzot.execute-api.localhost.localstack.cloud:4566/prod/payment?id=19&status=completed
 Content-Type: application/json
 
-###
-GET http://localhost:3000/notifications
-Content-Type: application/json
-
