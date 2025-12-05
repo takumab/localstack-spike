@@ -12,8 +12,8 @@
 		"local:deploy": "cdklocal deploy",
 		"local:bootstrap": "cdklocal bootstrap",
 		"localstack:start": "LOCALSTACK_SERVICES=dynamodb,lambda,apigateway,sqs,s3,iam,cloudformation,logs,ssm localstack start",
-		"local:query": "awslocal dynamodb query --table-name  payment-projections --key-condition-expression 'id = :id' --expression-attribute-values '{ \":id\": {\"S\": \"1\"} }'",
-		"local:scan": "awslocal dynamodb scan --table-name  payment-projections"
+		"local:query": "awslocal dynamodb query --table-name  events-table --key-condition-expression 'id = :id' --expression-attribute-values '{ \":id\": {\"S\": \"1\"} }'",
+		"local:scan": "awslocal dynamodb scan --table-name  events-table"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.8",
