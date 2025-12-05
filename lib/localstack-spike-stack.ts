@@ -21,14 +21,13 @@ export class LocalstackSpikeStack extends Stack {
 		const takeMoneyLambda = new NodejsFunction(this, "TakeMoneyLambda", {
 			functionName: "take-money",
 			runtime: Runtime.NODEJS_18_X,
-			entry: path.join(__dirname, "../lambda/post-pay/index.ts"),
+			entry: path.join(__dirname, "../lambda/take-money/index.ts"),
 			handler: "handler",
 			environment: {
 				PAYMENT_PROJECTIONS_TABLE: eventsTable.tableName,
 			},
 		});
 
-		// Grant post-pay Lambda read access to payment-projections table
 		eventsTable.grantReadData(takeMoneyLambda);
 
 		// API Gateway
@@ -40,7 +39,6 @@ export class LocalstackSpikeStack extends Stack {
 			description: "API Gateway for taking money",
 		});
 
-		// Connect API Gateway to post-pay Lambda
 		const takeMoneyIntegration = new LambdaIntegration(takeMoneyLambda);
 
 		// Add a /payment resource
