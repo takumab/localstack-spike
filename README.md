@@ -41,12 +41,12 @@ Once you have LocalStack and Cdklocal installed, you can proceed with the follow
 
 ***NOTE***: ***(Optional)*** Query deployed table to verify DynamoDB table exists. This is a temporary command just to verify the table was created successfully.:
 ```bash
-    npm run query:table
+    npm run local:query
 ```
 
 ***NOTE***: ***(Optional)*** Scan deployed table to verify DynamoDB table exists. This is a temporary command just to verify items were saved successfully.:
 ```bash
-    npm run scan:table
+    npm run local:scan
 ```
 
 ### Testing the API Gateway Endpoint
