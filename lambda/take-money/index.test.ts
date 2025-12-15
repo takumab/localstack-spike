@@ -1,14 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { takeMoney } from "./index";
-
-type Amount = {
-	amount: number;
-	status: string;
-};
-
-type Repository = {
-	save: (amount: Amount) => Promise<void>;
-};
+import { type Amount, type Repository, takeMoney } from "./index";
 
 describe("take-money Lambda Function", async () => {
 	test("should process take money request", async () => {

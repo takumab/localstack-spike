@@ -9,12 +9,12 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
-type Amount = {
+export type Amount = {
 	amount: number;
 	status: string;
 };
 
-type Repository = {
+export type Repository = {
 	save: (amount: Amount) => Promise<void>;
 };
 
