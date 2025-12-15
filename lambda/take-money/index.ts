@@ -9,40 +9,63 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
+type Amount = {
+	amount: number;
+	status: string;
+};
+
+type Repository = {
+	save: (amount: Amount) => Promise<void>;
+};
+
+const repository: Repository = {
+	save: async (amount: Amount) => {
+		const id = String(Math.floor(Math.random() * 100));
+		await docClient.send(
+			new PutCommand({
+				TableName: process.env.PAYMENT_PROJECTIONS_TABLE,
+				Item: {
+					id: id,
+					...amount,
+				},
+			}),
+		);
+	},
+};
+
+export const takeMoney = async (body: Amount, repository: Repository) => {
+	await repository.save(body);
+};
+
 export const handler = async (
 	event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
 	console.log("Take-money Lambda triggered");
 	console.log("Event:", JSON.stringify(event, null, 2));
-	const tableName = process.env.PAYMENT_PROJECTIONS_TABLE;
 	const paymentId = event.queryStringParameters?.id;
 	const status = event.queryStringParameters?.status;
 	const body = event.body ? JSON.parse(event.body) : null;
 
 	try {
 		if (event.body !== null) {
-			const id = String(Math.floor(Math.random() * 100));
-			await docClient.send(
-				new PutCommand({
-					TableName: tableName,
-					Item: {
-						id: id,
-						amount: body.amount,
-						status: body.status,
-					},
-				}),
-			);
+			const amount: Amount = {
+				amount: body.amount,
+				status: body.status,
+			};
+
+			await takeMoney(amount, repository);
+
 			return {
 				statusCode: 200,
 				body: JSON.stringify({
-					message: `Take-money Lambda executed successfully with event: ${event.body}, paymentId: ${id}`,
+					message: `Take-money Lambda executed successfully with event: ${event.body}`,
 				}),
 			};
 		}
 
 		const result = await docClient.send(
 			new QueryCommand({
-				TableName: tableName,
+				TableName: process.env.PAYMENT_PROJECTIONS_TABLE,
 				KeyConditionExpression: "id = :id",
 				FilterExpression: status ? "#status = :status" : undefined,
 				ExpressionAttributeNames: status ? { "#status": "status" } : undefined,
@@ -57,7 +80,7 @@ export const handler = async (
 			statusCode: 200,
 			body: JSON.stringify({
 				message: `Take-money Lambda executed successfully with event: ${event.body}`,
-				tableName: tableName,
+				tableName: process.env.PAYMENT_PROJECTIONS_TABLE,
 				itemCount: result.Count || 0,
 				items: result.Items || [],
 			}),
