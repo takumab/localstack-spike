@@ -1,5 +1,5 @@
 ###
-POST https://krurezpzot.execute-api.localhost.localstack.cloud:4566/prod/payment
+POST https://0c5rcfujyx.execute-api.localhost.localstack.cloud:4566/prod/payment
 Content-Type: application/json
 
 {
@@ -10,4 +10,13 @@ Content-Type: application/json
 ###
 GET  https://krurezpzot.execute-api.localhost.localstack.cloud:4566/prod/payment?id=19&status=completed
 Content-Type: application/json
+
+### SANDBOX API GATEWAY URL
+POST  https://e4tbz54w39.execute-api.us-east-1.amazonaws.com/prod/payment
+Content-Type: application/json
+
+{
+  "amount": "400",
+  "status": "completed"
+}
 

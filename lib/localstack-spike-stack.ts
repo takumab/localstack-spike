@@ -28,7 +28,7 @@ export class LocalstackSpikeStack extends Stack {
 			},
 		});
 
-		eventsTable.grantReadData(takeMoneyLambda);
+		eventsTable.grantReadWriteData(takeMoneyLambda);
 
 		// API Gateway
 		const api = new LambdaRestApi(this, "TakeMoneyApi", {
